@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '4.0.3'
     id 'io.spring.dependency-management' version '1.1.7'
+    //protobuf 플러그인 추가
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 group = 'demo'
@@ -29,8 +31,50 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-kafka-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // 1. gRPC 서버 스타터 - 스프링
+    implementation 'net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE'
+
+    // 2. gRPC 엔진 및 통신 규격
+    implementation 'io.grpc:grpc-netty-shaded:1.66.0'
+    implementation 'io.grpc:grpc-protobuf:1.66.0'
+    implementation 'io.grpc:grpc-stub:1.66.0'
+
+    // 3. Protobuf 유틸리티 (JSON 변환 및 자바 객체용)
+    implementation 'com.google.protobuf:protobuf-java-util:3.25.3'
+    implementation 'com.google.protobuf:protobuf-java:3.25.3'
+
+    // 4.  Jakarta Annotation 실행할 때 에러 해결
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    // gRPC 생성 코드가 찾는 구형 javax 어노테이션 (컴파일 에러)
+    compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
+
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.1"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.66.0"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
 }

@@ -36,5 +36,5 @@ out/
 ### VS Code ###
 .vscode/
 
-resources/application.yml
+/src/main/resources/application.yml
 src/main/java/demo/kafka/testproducer
