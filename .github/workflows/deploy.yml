@@ -109,9 +109,9 @@ jobs:
 
 
       - name: Restart Consumer
-    uses: appleboy/ssh-action@master
-    with:
-      host: ${{ secrets.NCP_HOST }}
-      username: ${{ secrets.NCP_USERNAME }}
-      password: ${{ secrets.NCP_PASSWORD }}
-      script: systemctl restart consumer
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.NCP_HOST }}
+          username: ${{ secrets.NCP_USERNAME }}
+          password: ${{ secrets.NCP_PASSWORD }}
+          script: systemctl restart consumer
