@@ -27,7 +27,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: mkdir -p /app/producer
 
       - name: Create Producer application.yml
@@ -35,7 +35,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: |
             cat > /app/producer/application.yml << 'ENDOFFILE'
             ${{ secrets.APPLICATION_YML_PRODUCER }}
@@ -46,7 +46,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           source: "kafka-producer/build/libs/*.jar"
           target: "/app/producer/"
           strip_components: 3
@@ -56,7 +56,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: |
             pkill -f producer || true
             sleep 2
@@ -86,7 +86,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: mkdir -p /app/consumer
 
       - name: Create Consumer application.yml
@@ -94,7 +94,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: |
             cat > /app/consumer/application.yml << 'ENDOFFILE'
             ${{ secrets.APPLICATION_YML_CONSUMER }}
@@ -105,7 +105,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           source: "kafka-consumer/build/libs/*.jar"
           target: "/app/consumer/"
           strip_components: 3
@@ -115,7 +115,7 @@ jobs:
         with:
           host: ${{ secrets.NCP_HOST }}
           username: ${{ secrets.NCP_USERNAME }}
-          key: ${{ secrets.NCP_PEM_KEY }}
+          key: ${{ secrets.NCP_PASSWORD }}
           script: |
             pkill -f consumer || true
             sleep 2
