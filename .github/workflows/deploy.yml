@@ -54,16 +54,14 @@ jobs:
       - name: Restart Producer
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.NCP_HOST }}
-          username: ${{ secrets.NCP_USERNAME }}
-          password: ${{ secrets.NCP_PASSWORD }}
-          script: |
-            pkill -f "/app/producer" || true
-            sleep 2
-            nohup java -jar /app/producer/*.jar \
-              --spring.config.location=/app/producer/application.yml \
-              > /app/producer/producer.log 2>&1 &
-            echo "done"
+         host: ${{ secrets.NCP_HOST }}
+         username: ${{ secrets.NCP_USERNAME }}
+         password: ${{ secrets.NCP_PASSWORD }}
+         script: |
+          pkill -f "/app/producer" || true
+          sleep 2
+          setsid java -jar /app/producer/*.jar --spring.config.location=/app/producer/application.yml > /app/producer/producer.log 2>&1 &
+
 
   deploy-consumer:
     runs-on: ubuntu-latest
@@ -111,6 +109,7 @@ jobs:
           target: "/app/consumer/"
           strip_components: 3
 
+
       - name: Restart Consumer
         uses: appleboy/ssh-action@master
         with:
@@ -118,9 +117,6 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
-                  pkill -f "/app/consumer" || true
-                  sleep 2
-                  nohup java -jar /app/consumer/*.jar \
-                    --spring.config.location=/app/consumer/application.yml \
-                    > /app/consumer/consumer.log 2>&1 &
-                  echo "done"
+            pkill -f "/app/consumer" || true
+            sleep 2
+            setsid java -jar /app/consumer/*.jar --spring.config.location=/app/consumer/application.yml > /app/consumer/consumer.log 2>&1 &
