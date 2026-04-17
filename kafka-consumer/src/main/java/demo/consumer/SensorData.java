@@ -13,6 +13,8 @@ import tools.jackson.databind.ObjectMapper;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SensorData {
+    private static final  ObjectMapper mapper = new ObjectMapper();
+
     private String deviceId;
     private double accX;
     private double accY;
@@ -25,7 +27,6 @@ public class SensorData {
     private long timestamp;
 
     public static SensorData fromJson(String json) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, SensorData.class);
     }
 }
