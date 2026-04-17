@@ -54,13 +54,11 @@ jobs:
       - name: Restart Producer
         uses: appleboy/ssh-action@master
         with:
-         host: ${{ secrets.NCP_HOST }}
-         username: ${{ secrets.NCP_USERNAME }}
-         password: ${{ secrets.NCP_PASSWORD }}
-         script_stop: false
-         script: |
-           chmod +x /app/producer/start.sh
-           /app/producer/start.sh
+          host: ${{ secrets.NCP_HOST }}
+          username: ${{ secrets.NCP_USERNAME }}
+          password: ${{ secrets.NCP_PASSWORD }}
+          script: systemctl restart producer
+
 
   deploy-consumer:
     runs-on: ubuntu-latest
@@ -109,13 +107,11 @@ jobs:
           strip_components: 3
 
 
-      - name: Restart consumer
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.NCP_HOST }}
-          username: ${{ secrets.NCP_USERNAME }}
-          password: ${{ secrets.NCP_PASSWORD }}
-          script_stop: false
-          script: |
-            chmod +x /app/consumer/start.sh
-            /app/consumer/start.sh
+
+      - name: Restart Consumer
+    uses: appleboy/ssh-action@master
+    with:
+      host: ${{ secrets.NCP_HOST }}
+      username: ${{ secrets.NCP_USERNAME }}
+      password: ${{ secrets.NCP_PASSWORD }}
+      script: systemctl restart consumer
