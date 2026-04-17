@@ -58,11 +58,12 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
-            pkill -f producer || true
+            pkill -f "kafka-producer" || true
             sleep 2
             nohup java -jar /app/producer/*.jar \
               --spring.config.location=/app/producer/application.yml \
               > /app/producer/producer.log 2>&1 &
+            echo "done"
 
   deploy-consumer:
     runs-on: ubuntu-latest
@@ -117,8 +118,9 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
-            pkill -f consumer || true
-            sleep 2
-            nohup java -jar /app/consumer/*.jar \
-              --spring.config.location=/app/consumer/application.yml \
-              > /app/consumer/consumer.log 2>&1 &
+                  pkill -f "kafka-consumer" || true
+                  sleep 2
+                  nohup java -jar /app/consumer/*.jar \
+                    --spring.config.location=/app/consumer/application.yml \
+                    > /app/consumer/consumer.log 2>&1 &
+                  echo "done"
