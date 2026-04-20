@@ -38,7 +38,7 @@ jobs:
           #Dockerfile이 있는 폴더로 가서
           push: true
           #빌드 후 Docker hub에 자동 업로드
-          tags: ${{secrets.DOCKER_USER}}/producer:latest
+          tags: ${{secrets.DOCKER_USERNAME}}/producer:latest
           #dockerfile 읽고 -> 이미지 빌드 후 ->docker hub에 push
 
       - name: Deploy producer server to ncp
