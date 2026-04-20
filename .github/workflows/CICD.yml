@@ -48,20 +48,19 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
-            docker pull ${{secrets.DOCKER_USERNAME}}/producer:latest
-          #docker hub에서 최신 이미지 다운로드
+            docker pull ${{ secrets.DOCKER_USERNAME }}/producer:latest
             docker stop producer || true
             docker rm producer || true
-          # 기존 실행중인 컨테이너 중지 , 없어도 무시 하고 삭제 
-            docker run -d\
-              --name producer\ # 컨테이너 이름 정하고 
-              --restart always\ # 재부팅 or 컨테이너 죽을 때 자동 재시작
-              -p 9090:9090\ #ncp 9090 -> 컨테이너 9090
-              -e SPRING_CONFIG_LOCATION=/config/application.yml\
-                    #컨테이너 에서의 환경변수 설정으로 위치 알려줌
-              -v /app/producer:/config \ # 볼륨 마운트 ncp의 /app/producer -> 컨테이너 /config
-              ${{secrets.DOCKER_USERNAME}}/producer:latest # 실행한 이미지
-
+            docker run -d \
+              --name producer \
+              --restart always \
+              -p 9090:9090 \
+              -e SPRING_CONFIG_LOCATION=/config/application.yml \
+              -v /app/producer:/config \
+              ${{ secrets.DOCKER_USERNAME }}/producer:latest
+    #docker hub에서 최신 이미지 다운로드 # 컨테이너 이름 정하고   # 재부팅 or 컨테이너 죽을 때 자동 재시작
+    #ncp 9090 -> 컨테이너 9090  #컨테이너 에서의 환경변수 설정으로 위치 알려줌
+    # 볼륨 마운트 ncp의 /app/producer -> 컨테이너 /config # 실행한 이미지
   deploy-consumer:
     runs-on: ubuntu-latest
     steps:
