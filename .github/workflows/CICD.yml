@@ -48,6 +48,12 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
+            mkdir -p /app/producer
+            # /app/producer
+            cat > /app/producer/application.yml << 'EOF'
+            ${{ secrets.APPLICATION_YML_PRODUCER }}
+            EOF
+            
             docker pull ${{ secrets.DOCKER_USERNAME }}/producer:latest
             docker stop producer || true
             docker rm producer || true
@@ -98,6 +104,11 @@ jobs:
           username: ${{ secrets.NCP_USERNAME }}
           password: ${{ secrets.NCP_PASSWORD }}
           script: |
+            mkdir -p /app/consumer
+             cat > /app/consumer/application.yml << 'EOF'
+            ${{ secrets.APPLICATION_YML_CONSUMER }}
+            EOF
+            
             docker pull ${{ secrets.DOCKER_USERNAME }}/consumer:latest
             docker stop consumer || true
             docker rm consumer || true
