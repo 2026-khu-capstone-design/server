@@ -32,6 +32,7 @@ public class SensorConsumerService {
             backOff = @BackOff(delay = 100,multiplier = 4),
             dltTopicSuffix = ".storage.dlt"
     )
+
     @KafkaListener(topics = "sensor.stream", groupId = "alert-group", concurrency = "2")
     public void consumeForAlert(String message){
         try {
