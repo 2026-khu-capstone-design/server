@@ -49,6 +49,8 @@ dependencies {
     // gRPC 생성 코드가 찾는 구형 javax 어노테이션 (컴파일 에러)
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 protobuf {
