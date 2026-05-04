@@ -61,6 +61,7 @@ jobs:
               --name producer \
               --restart always \
               -p 9090:9090 \
+              -p 9001:9001 \
               -e SPRING_CONFIG_LOCATION=/config/application.yml \
               -v /app/producer:/config \
               ${{ secrets.DOCKER_USERNAME }}/producer:latest
