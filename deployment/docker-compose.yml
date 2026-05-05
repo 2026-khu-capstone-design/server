@@ -19,3 +19,12 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  kafka-exporter:
+    image: danielqsj/kafka-exporter
+    container_name: kafka-exporter
+    restart: always
+    command:
+        - --kafka.server=223.130.139.89:9092
+    ports:
+        - "9308:9308"
