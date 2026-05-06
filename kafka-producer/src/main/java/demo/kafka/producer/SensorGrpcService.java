@@ -23,7 +23,9 @@ public class SensorGrpcService extends SensorServiceGrpc.SensorServiceImplBase{
             public void onNext(SensorRequest sensorRequest) {
                 // 데이터가 올 때 마다 실행 -> json 변환 및 카프카 전송
                 try {
-                    String jsonMessage = JsonFormat.printer().print(sensorRequest);
+                    String jsonMessage = JsonFormat.printer()
+                            .includingDefaultValueFields()  // 0값도 포함해서 출력
+                            .print(sensorRequest);
                     kafkaTemplate.send(TOPIC,sensorRequest.getDeviceId(),jsonMessage);
                     log.info("stream 수신 devide:{} kafka 전송 완",sensorRequest.getDeviceId());
                 }catch (Exception e){
