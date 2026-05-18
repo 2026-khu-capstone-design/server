@@ -87,18 +87,14 @@ public class SensorConsumerService {
             boolean isAbnormal = variance > 10.0;     // 불규칙한 움직임
 
             if (isShock && isRotation) {
-                log.warn("낙상 감지 - 기기: {}, 충격: {}, 회전: {}",
-                        data.getDeviceId(), totalAcc, totalGyro);
-                    data.getDeviceId(), totalAcc, totalGyro);
+                log.warn("낙상 감지 - 기기: {}, 충격: {}, 회전: {}", data.getDeviceId(), totalAcc, totalGyro);
                 messagingTemplate.convertAndSend("/topic/alerts",
                     "Device " + data.getDeviceId() + ": 낙상 감지");
             }
 
             // 이상 움직임 감지: 분산이 임계값 초과
             if (isAbnormal) {
-                log.warn("이상 움직임 - 기기: {}, 분산: {}, 평균가속도: {}",
-                        data.getDeviceId(), variance, avgAcc);
-                    data.getDeviceId(), variance, avgAcc);
+                log.warn("이상 움직임 - 기기: {}, 분산: {}, 평균가속도: {}", data.getDeviceId(), variance, avgAcc);
                 messagingTemplate.convertAndSend("/topic/alerts",
                     "Device " + data.getDeviceId() + ": 이상 움직임 감지");
             }
