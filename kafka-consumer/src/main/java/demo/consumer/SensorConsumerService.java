@@ -25,7 +25,7 @@ public class SensorConsumerService {
     private final Map<String, Deque<SensorData>> deviceHistory = new ConcurrentHashMap<>();
 
     // group 1 : 실시간 시각화
-    @KafkaListener(topics = "sensor.stream", groupId = "display-group", concurrency = "2")
+    @KafkaListener(topics = "sensor.stream", groupId = "display-group", concurrency = "${kafka.concurrency}")
     public void consumeForDisplay(String message,@Header(KafkaHeaders.RECEIVED_PARTITION) int partition){
         log.info("[Display-Group] 파티션: {}, 메시지: {}", partition, message);
         messagingTemplate.convertAndSend("/topic/sensors", message);

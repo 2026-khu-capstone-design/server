@@ -25,6 +25,6 @@ services:
     container_name: kafka-exporter
     restart: always
     command:
-        - --kafka.server=223.130.139.89:9092
+      - --kafka.server=223.130.139.89:9092
     ports:
-        - "9308:9308"
+      - "9308:9308"
